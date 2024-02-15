@@ -5,4 +5,6 @@ ADD . .
 
 RUN npm ci
 
+EXPOSE 8080
+
 USER node
