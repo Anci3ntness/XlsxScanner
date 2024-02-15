@@ -1,0 +1,29 @@
+{
+    "name": "xlsxscanner",
+    "description": "Приложение для расчета данных XLSX таблиц по шаблону.",
+    "version": "1.0.0",
+    "private": true,
+    "author": {
+        "name": "Nikita",
+        "email": "nikitamashkov13@gmail.com"
+    },
+    "dependencies": {
+        "@types/node": "^16.18.61",
+        "xlsx": "^0.18.5"
+    },
+    "devDependencies": {
+        "eslint": "8.6.0",
+        "import-sort-style-module": "^6.0.0",
+        "prettier": "^2.3.1",
+        "prettier-plugin-import-sort": "^0.0.7",
+        "typescript": "^4.9.5"
+    },
+    "scripts": {
+        "start": "tsc && node build/index.js"
+    },
+    "importSort": {
+        ".js, .jsx, .ts, .tsx": {
+            "style": "module"
+        }
+    }
+}
