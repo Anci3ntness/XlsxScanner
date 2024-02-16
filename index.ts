@@ -3,6 +3,8 @@ import path from "path"
 
 import XLSX from "xlsx"
 
+console.error = function () {}
+
 const dict = [
 	"Январь",
 	"Февраль",
@@ -69,9 +71,13 @@ interface IJsonOutput {
 			}
 
 			sumFinalArray.push(JsonOutput)
+			console.info(
+				"Файл '" + path.parse(file).name + "' обработан успешно!"
+			)
 		})
 		writeExcel("./output.xlsx", sumFinalArray)
 	} catch (e: any) {
+		console.warn("Произошла ошибка при обработке файла")
 		throw new Error(e)
 	}
 })()
