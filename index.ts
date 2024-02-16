@@ -60,7 +60,8 @@ interface IJsonOutput {
 				concatArray = concatArray.concat(countArr)
 			}
 			const JsonOutput: IJsonOutput = {}
-			JsonOutput["поток"] = String(november)
+			JsonOutput["Файл"] = path.parse(file).name
+			JsonOutput["Поток"] = String(november)
 			for (let i = 0; i < concatArray.length; i++) {
 				JsonOutput[dict[~~(i / 5)] + ((i % 5) + 1)] = String(
 					concatArray[i]
@@ -69,7 +70,7 @@ interface IJsonOutput {
 
 			sumFinalArray.push(JsonOutput)
 		})
-		writeExcel("output.xlsx", sumFinalArray)
+		writeExcel("./output.xlsx", sumFinalArray)
 	} catch (e: any) {
 		throw new Error(e)
 	}
@@ -89,11 +90,32 @@ function writeExcel(
 ) {
 	const workBook = XLSX.utils.book_new()
 
+	let objectMaxLength: number[] = []
+
+	list.map((jsonData) => {
+		Object.entries(jsonData).map(([a, v], idx) => {
+			let columnHeader = a
+			let columnValue = v as string
+			let columnWitdh =
+				columnHeader.length > columnValue.length
+					? columnHeader.length
+					: columnValue.length
+
+			objectMaxLength[idx] =
+				objectMaxLength[idx] >= columnWitdh
+					? objectMaxLength[idx]
+					: columnWitdh + 5
+		})
+	})
+
+	const wscols = objectMaxLength.map((w: number) => ({ width: w }))
 	XLSX.utils.book_append_sheet(
 		workBook,
 		XLSX.utils.json_to_sheet(list),
 		sheetName
 	)
+
+	workBook.Sheets[sheetName]["!cols"] = wscols
 
 	XLSX.writeFile(workBook, filePath)
 }
