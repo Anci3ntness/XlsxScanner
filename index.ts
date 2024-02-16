@@ -94,17 +94,18 @@ function writeExcel(
 
 	list.map((jsonData) => {
 		Object.entries(jsonData).map(([a, v], idx) => {
+			const max = 100
 			let columnHeader = a
 			let columnValue = v as string
 			let columnWitdh =
 				columnHeader.length > columnValue.length
 					? columnHeader.length
 					: columnValue.length
-
+			if (columnWitdh > max) columnWitdh = max
 			objectMaxLength[idx] =
 				objectMaxLength[idx] >= columnWitdh
 					? objectMaxLength[idx]
-					: columnWitdh + 5
+					: columnWitdh + 1
 		})
 	})
 
